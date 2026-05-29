@@ -1,0 +1,47 @@
+# Dependency directories
+node_modules/
+jspdf/
+.npm/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python environment and cache
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local databases and models
+*.db
+*.db-journal
+*.sqlite
+*.pkl
+models/ensemble_v2.joblib
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temp/system files
+tunnel_log.txt
+python-installer.exe
+.gemini/

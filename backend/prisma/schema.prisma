@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role               String   @default("business_owner") // 'admin' or 'business_owner'
+  apiKey             String?  @unique @default(uuid()) // Used for POS/Fintech integration
+  paychanguSecretKey String?  // Your actual PayChangu Secret Key
+  createdAt          DateTime @default(now())
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  amount        Float
+  timestamp     DateTime @default(now())
+  paymentMethod String
+  createdAt     DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  anomalies Anomaly[]
+}
+
+model Anomaly {
+  id           String   @id @default(uuid())
+  anomalyScore Float
+  reason       String?  // Explanation for why this was flagged
+  isResolved   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  type      String
+  data      String
+  createdAt DateTime @default(now())
+}
